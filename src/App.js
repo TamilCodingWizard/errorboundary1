@@ -1,25 +1,28 @@
 import logo from './logo.svg';
 import './App.css';
+import Home from './Home';
+import { ErrorBoundary } from 'react-error-boundary';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ErrorBoundary FallbackComponent={ErrorFallbackComponent} onError = {(error,componentStack)=> {
+        // library
+      }}>
+        <Home/>
+      </ErrorBoundary>
     </div>
   );
+}
+
+const ErrorFallbackComponent = ({error,resetErrorBoundary}) => {
+  return (
+    <>
+      <p>Something went wrong!</p>
+      <p>{error.message}</p>
+      <button onClick={resetErrorBoundary}>Try Again</button>
+    </>
+  )
 }
 
 export default App;
